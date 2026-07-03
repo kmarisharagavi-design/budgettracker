@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Set Budget</title>
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial,sans-serif;
+}
+
+body{
+    height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    background:linear-gradient(135deg,#00c6ff,#0072ff);
+}
+
+.container{
+
+    width:420px;
+    background:white;
+    padding:30px;
+    border-radius:15px;
+    box-shadow:0 0 20px rgba(0,0,0,.2);
+
+}
+
+h2{
+
+    text-align:center;
+    margin-bottom:25px;
+    color:#0072ff;
+
+}
+
+input{
+
+    width:100%;
+    padding:12px;
+    margin:15px 0;
+    border:1px solid #ccc;
+    border-radius:8px;
+
+}
+
+button{
+
+    width:100%;
+    padding:12px;
+    margin-top:15px;
+    border:none;
+    border-radius:8px;
+    background:#0072ff;
+    color:white;
+    cursor:pointer;
+    font-size:16px;
+
+}
+
+button:hover{
+
+    background:#0057c2;
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<h2>Monthly Budget</h2>
+
+<input
+type="number"
+id="amount"
+placeholder="Enter Monthly Budget">
+
+<button onclick="saveBudget()">
+Save Budget
+</button>
+
+<button onclick="location.href='dashboard.html'">
+Back To Dashboard
+</button>
+
+</div>
+
+<script>
+
+async function saveBudget(){
+
+    let amount =
+    document.getElementById("amount").value;
+
+    let user =
+    JSON.parse(localStorage.getItem("loggedUser"));
+
+    if(!user){
+
+        alert("Please Login First");
+
+        window.location.href="login.html";
+
+        return;
+    }
+
+    try{
+
+        let response =
+        await fetch(
+            "http://localhost:8080/budget",
+            {
+
+                method:"POST",
+
+                headers:{
+                    "Content-Type":"application/json"
+                },
+
+                body:JSON.stringify({
+
+                    amount:amount,
+
+                    user:{
+                        id:user.id
+                    }
+
+                })
+
+            }
+        );
+
+        if(response.ok){
+
+            alert("Budget Saved Successfully");
+
+            document.getElementById("amount").value="";
+
+        }
+        else{
+
+            alert("Budget Save Failed");
+
+        }
+
+    }
+    catch(error){
+
+        console.log(error);
+
+        alert("Backend Not Running");
+
+    }
+
+}
+
+</script>
+
+</body>
+</html>

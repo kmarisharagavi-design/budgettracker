@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<title>All Income</title>
+
+<style>
+
+body{
+    font-family:Arial;
+    background:#f4f6f9;
+    padding:30px;
+}
+
+h2{
+    text-align:center;
+    margin-bottom:20px;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+    background:white;
+}
+
+th,td{
+    border:1px solid #ddd;
+    padding:12px;
+    text-align:center;
+}
+
+th{
+    background:#28a745;
+    color:white;
+}
+
+button{
+    padding:8px 15px;
+    border:none;
+    border-radius:6px;
+    cursor:pointer;
+}
+
+.delete{
+    background:red;
+    color:white;
+}
+
+.back{
+    background:#0072ff;
+    color:white;
+    margin-top:20px;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<h2>All Income</h2>
+
+<table>
+
+<thead>
+
+<tr>
+
+<th>ID</th>
+<th>User</th>
+<th>Source</th>
+<th>MonthSalary</th>
+<th>Date</th>
+<th>Action</th>
+
+</tr>
+
+</thead>
+
+<tbody id="table">
+
+</tbody>
+
+</table>
+
+<center>
+
+<button
+class="back"
+onclick="location.href='admindashboard.html'">
+
+Back
+
+</button>
+
+</center>
+
+<script>
+
+async function loadIncome(){
+
+    let response =
+    await fetch(
+        "http://localhost:8080/admin/income"
+    );
+
+    let incomes =
+    await response.json();
+
+    let table =
+    document.getElementById("table");
+
+    table.innerHTML="";
+
+    incomes.forEach(income=>{
+
+        table.innerHTML +=`
+
+        <tr>
+
+        <td>${income.id}</td>
+
+        <td>${income.user ? income.user.name : "Unknown User"}</td>
+
+        <td>${income.source}</td>
+
+        <td>₹${income.amount}</td>
+
+        <td>${income.incomeDate}</td>
+
+        <td>
+
+        <button
+        class="delete"
+        onclick="deleteIncome(${income.id})">
+
+        Delete
+
+        </button>
+
+        </td>
+
+        </tr>
+
+        `;
+
+    });
+
+}
+
+async function deleteIncome(id){
+
+    if(confirm("Delete Income?")){
+
+        await fetch(
+
+            "http://localhost:8080/income/"+id,
+
+            {
+
+                method:"DELETE"
+
+            }
+
+        );
+
+        alert("Deleted Successfully");
+
+        loadIncome();
+
+    }
+
+}
+
+loadIncome();
+
+</script>
+
+</body>
+</html>

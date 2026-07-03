@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Add Income</title>
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial,sans-serif;
+}
+
+body{
+height:100vh;
+display:flex;
+justify-content:center;
+align-items:center;
+background:linear-gradient(135deg,#28a745,#20c997);
+}
+
+.container{
+width:450px;
+background:white;
+padding:30px;
+border-radius:15px;
+box-shadow:0 0 20px rgba(0,0,0,0.2);
+}
+
+input{
+width:100%;
+padding:12px;
+margin:10px 0;
+border:1px solid #ccc;
+border-radius:8px;
+}
+
+button{
+width:100%;
+padding:12px;
+margin-top:10px;
+border:none;
+border-radius:8px;
+background:#28a745;
+color:white;
+cursor:pointer;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<h2>Add Income</h2>
+
+<input type="number"
+id="amount"
+placeholder="Enter Income">
+
+<input type="text"
+id="source"
+placeholder="Salary / Business / Other">
+
+<input type="date"
+id="incomeDate">
+
+<button onclick="saveIncome()">
+Save Income
+</button>
+
+<button onclick="location.href='dashboard.html'">
+Back
+</button>
+
+</div>
+
+<script>
+
+async function saveIncome(){
+
+let user=
+JSON.parse(localStorage.getItem("loggedUser"));
+
+let amount=
+document.getElementById("amount").value;
+
+let source=
+document.getElementById("source").value;
+
+let incomeDate=
+document.getElementById("incomeDate").value;
+
+await fetch(
+"http://localhost:8080/income",
+{
+method:"POST",
+headers:{
+"Content-Type":"application/json"
+},
+body:JSON.stringify({
+amount:amount,
+source:source,
+incomeDate:incomeDate,
+user:{
+id:user.id
+}
+})
+}
+);
+
+alert("Income Added Successfully");
+
+}
+
+</script>
+
+</body>
+</html>

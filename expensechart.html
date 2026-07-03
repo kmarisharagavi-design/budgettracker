@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Expense Category Chart</title>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <style>
+
+    body{
+        font-family:Arial,sans-serif;
+        background:#f4f6f9;
+        text-align:center;
+    }
+
+    h2{
+        margin-top:30px;
+        color:#0072ff;
+    }
+
+    .chart-box{
+        width:600px;
+        height:600px;
+        margin:40px auto;
+        background:white;
+        padding:20px;
+        border-radius:12px;
+        box-shadow:0 0 10px rgba(0,0,0,0.2);
+    }
+
+    button{
+        margin-top:20px;
+        padding:12px 20px;
+        border:none;
+        border-radius:8px;
+        background:#0072ff;
+        color:white;
+        cursor:pointer;
+    }
+
+    button:hover{
+        background:#0057c2;
+    }
+
+    </style>
+
+</head>
+
+<body>
+
+<h2>Expense Category Chart</h2>
+
+<div class="chart-box">
+    <canvas id="expenseChart"></canvas>
+</div>
+
+<button onclick="location.href='dashboard.html'">
+    Back to Dashboard
+</button>
+
+<script>
+
+let user =
+JSON.parse(localStorage.getItem("loggedUser"));
+
+async function loadChart(){
+
+    let response =
+    await fetch(`http://localhost:8080/expense/category/${user.id}`);
+
+    let data =
+    await response.json();
+
+    let labels = [];
+    let values = [];
+
+    data.forEach(item=>{
+
+        labels.push(item[0]);
+        values.push(item[1]);
+
+    });
+
+    new Chart(document.getElementById("expenseChart"),{
+
+        type:"pie",
+
+        data:{
+
+            labels:labels,
+
+            datasets:[{
+
+                data:values
+
+            }]
+
+        },
+
+        options:{
+
+            responsive:true,
+            maintainAspectRatio:false
+
+        }
+
+    });
+
+}
+
+loadChart();
+
+</script>
+
+</body>
+</html>

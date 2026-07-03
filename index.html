@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Budget Tracker</title>
+
+    <style>
+
+        *{
+            margin:0;
+            padding:0;
+            box-sizing:border-box;
+            font-family:Arial, sans-serif;
+        }
+
+        html{
+            scroll-behavior:smooth;
+        }
+
+        body{
+            background-image:url("https://images.unsplash.com/photo-1554224155-6726b3ff858f");
+            background-size:cover;
+            background-position:center;
+            background-attachment:fixed;
+        }
+
+        .overlay{
+            background:rgba(0,0,0,0.7);
+            min-height:100vh;
+        }
+
+        nav{
+            display:flex;
+            justify-content:space-between;
+            align-items:center;
+            padding:20px 80px;
+            position:sticky;
+            top:0;
+            background:rgba(0,0,0,0.5);
+        }
+
+        .logo{
+            color:white;
+            font-size:30px;
+            font-weight:bold;
+        }
+
+        nav ul{
+            display:flex;
+            list-style:none;
+        }
+
+        nav ul li{
+            margin-left:25px;
+        }
+
+        nav ul li a{
+            color:white;
+            text-decoration:none;
+            font-size:18px;
+        }
+
+        nav ul li a:hover{
+            color:#00b894;
+        }
+
+        .hero{
+            text-align:center;
+            color:white;
+            padding-top:150px;
+            min-height:90vh;
+        }
+
+        .hero h1{
+            font-size:60px;
+            margin-bottom:20px;
+        }
+
+        .hero p{
+            font-size:22px;
+            margin-bottom:30px;
+        }
+
+        .btn{
+            padding:15px 30px;
+            background:#00b894;
+            color:white;
+            text-decoration:none;
+            border-radius:8px;
+            font-size:18px;
+        }
+
+        .btn:hover{
+            background:#009975;
+        }
+
+        section{
+            padding:100px 50px;
+            text-align:center;
+            color:white;
+        }
+
+        section h2{
+            font-size:40px;
+            margin-bottom:20px;
+        }
+
+        section p{
+            font-size:20px;
+            line-height:35px;
+        }
+
+        .feature-box{
+            display:flex;
+            justify-content:center;
+            gap:30px;
+            flex-wrap:wrap;
+            margin-top:30px;
+        }
+
+        .card{
+            width:250px;
+            padding:20px;
+            background:white;
+            color:black;
+            border-radius:10px;
+        }
+
+        footer{
+            text-align:center;
+            color:white;
+            padding:20px;
+            background:black;
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<div class="overlay">
+
+    <nav>
+        <div class="logo">Budget Tracker</div>
+
+        <ul>
+            <li><a href="#home">Home</a></li>
+            <li><a href="#features">Features</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#contact">Contact</a></li>
+            <li><a href="login.html">Login</a></li>
+        </ul>
+    </nav>
+
+    <div class="hero" id="home">
+
+        <h1>Manage Your Money Smartly</h1>
+
+        <p>
+            Track Income, Expenses and Savings
+            with our Budget Tracker
+        </p>
+
+        <a href="login.html" class="btn">
+            Get Started
+        </a>
+
+    </div>
+
+    <section id="features">
+
+        <h2>Features</h2>
+
+        <div class="feature-box">
+
+            <div class="card">
+                <h3>Expense Tracking</h3>
+                <p>Manage daily expenses easily.</p>
+            </div>
+
+            <div class="card">
+                <h3>Income Tracking</h3>
+                <p>Record all income sources.</p>
+            </div>
+
+            <div class="card">
+                <h3>Reports</h3>
+                <p>View monthly summaries.</p>
+            </div>
+
+        </div>
+
+    </section>
+
+    <section id="about">
+
+        <h2>About Us</h2>
+
+        <p>
+            Budget Tracker is a personal finance management system
+            that helps users monitor income, expenses and savings
+            in one place.
+        </p>
+
+    </section>
+
+    <section id="contact">
+
+        <h2>Contact Us</h2>
+
+        <p>Email : kmarisharagavi@gmail.com</p>
+        <p>Phone : +91 9791690152</p>
+
+    </section>
+
+    <footer>
+        © 2026 Budget Tracker | All Rights Reserved
+    </footer>
+
+</div>
+
+</body>
+</html>

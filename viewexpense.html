@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>View Expenses</title>
+
+
+<style>
+
+    *{
+        margin:0;
+        padding:0;
+        box-sizing:border-box;
+        font-family:Arial,sans-serif;
+    }
+
+    body{
+        background:#f4f6f9;
+        padding:30px;
+    }
+
+    h2{
+        text-align:center;
+        margin-bottom:20px;
+        color:#333;
+    }
+
+    table{
+        width:100%;
+        border-collapse:collapse;
+        background:white;
+        box-shadow:0 2px 10px rgba(0,0,0,0.1);
+    }
+
+    th{
+        background:#0072ff;
+        color:white;
+        padding:12px;
+    }
+
+    td{
+        padding:12px;
+        text-align:center;
+        border-bottom:1px solid #ddd;
+    }
+
+    button{
+        padding:8px 15px;
+        border:none;
+        border-radius:5px;
+        cursor:pointer;
+    }
+
+    .delete-btn{
+        background:red;
+        color:white;
+    }
+
+    .back-btn{
+        background:#0072ff;
+        color:white;
+        margin-top:20px;
+        padding:12px 20px;
+    }
+
+</style>
+
+
+</head>
+
+<body>
+
+<h2>All Expenses</h2>
+
+<table>
+
+
+<thead>
+    <tr>
+        <th>ID</th>
+        <th>Amount</th>
+        <th>Category</th>
+        <th>Description</th>
+         <th>Date</th>
+        <th>Action</th>
+       
+    </tr>
+</thead>
+
+<tbody id="expenseTable">
+</tbody>
+
+
+</table>
+
+<center>
+    <button
+        class="back-btn"
+        onclick="location.href='dashboard.html'">
+        Back To Dashboard
+    </button>
+</center>
+
+<script>
+
+async function loadExpenses(){
+
+    let user =
+    JSON.parse(localStorage.getItem("loggedUser"));
+
+    if(!user){
+
+        alert("Please Login First");
+
+        window.location.href="login.html";
+
+        return;
+    }
+
+    let response =
+    await fetch(
+        `http://localhost:8080/expense/user/${user.id}`
+    );
+
+    let expenses =
+    await response.json();
+
+    let table =
+    document.getElementById("expenseTable");
+
+    table.innerHTML = "";
+
+    expenses.forEach(expense => {
+
+        table.innerHTML += `
+        <tr>
+            <td>${expense.id}</td>
+            <td>₹${expense.amount}</td>
+            <td>${expense.category}</td>
+            <td>${expense.description}</td>
+            <td>${expense.expenseDate  || "-"}</td>
+            <td>
+                <button
+                    class="delete-btn"
+                    onclick="deleteExpense(${expense.id})">
+                    Delete
+                </button>
+            </td>
+        </tr>
+        `;
+    });
+}
+
+async function deleteExpense(id){
+
+    if(confirm("Delete this expense?")){
+
+        await fetch(
+            "http://localhost:8080/expense/" + id,
+            {
+                method:"DELETE"
+            }
+        );
+
+        alert("Expense Deleted");
+
+        loadExpenses();
+    }
+}
+
+loadExpenses();
+
+</script>
+
+
+</body>
+</html>
